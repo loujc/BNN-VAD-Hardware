@@ -1,10 +1,10 @@
 module bnn_conv (
     input   wire                clk     ,
                                 rst_n   ,
-    input   wire [4:0]          data_in ,
+    input   wire [4:0]          data_in ,//输入的一帧数据 5 位
 
-    output  reg signed  [2:0]   conv_out,
-    output  reg                 conv_done
+    output  reg signed  [2:0]   conv_out,//卷积一次输入，每一位为一个kernel和一帧输入的运算结果
+    output  reg                 conv_done//conv整个（6帧，6x20）运算结束，目前应该没用到……
 );
 
 reg signed [4:0]    weight1     ;
@@ -13,7 +13,7 @@ reg signed [4:0]    weight3     ;
 reg signed [2:0]    result      ;
 reg [5:0]           cnt = 5'b0  ;
 
-//权重赋值
+//权重赋值，手动键入即可
 assign weight1 = {1,-1,1,1,1};
 assign weight2 = {1,-1,1,1,1};
 assign weight3 = {1,-1,1,1,1};

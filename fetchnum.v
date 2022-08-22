@@ -1,11 +1,11 @@
 module fetchnum(
     input   wire        clk,
                         rst_n,
-                        read_en,
+                        read_en,//外部读使能，使能时候，可以读入数据
     input   wire [19:0] data_in,
 
-    output  reg [4 :0]  data_one,
-    output  reg         empty
+    output  reg [4 :0]  data_one,//取出(1x5)这样一帧数，通过移位寄存器实现
+    output  reg         empty//传递给外部，目前一帧（1x20）运算结束，请求输入下一帧
 );
 
 reg [19:0]  data        ;

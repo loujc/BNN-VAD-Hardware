@@ -7,6 +7,7 @@ module mac (
     output  reg                 mac_done
 );
 
+//后续需要手动键入weight值，不知道是否有更好方案……
 reg signed [107:0] fc_weight1;
 reg signed [107:0] fc_weight2;
 assign fc_weight1 = {};//填入weight
