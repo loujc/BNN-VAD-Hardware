@@ -14,9 +14,9 @@ reg signed [2:0]    result      ;
 reg [5:0]           cnt = 5'b0  ;
 
 //权重赋值，手动键入即可
-assign weight1 = {1,-1,1,1,1};
-assign weight2 = {1,-1,1,1,1};
-assign weight3 = {1,-1,1,1,1};
+weight1 = {1,-1,1,1,1};
+weight2 = {1,-1,1,1,1};
+weight3 = {1,-1,1,1,1};
 
 always @(posedge clk or negedge rst_n) begin
     if(!rst_n)begin

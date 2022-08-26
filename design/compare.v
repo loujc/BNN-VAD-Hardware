@@ -12,10 +12,10 @@ always @(posedge clk or negedge rst_n) begin
         result <= 2'b00;
     end
     else begin
-        if((compare_in[1]>compare_in[0]) || enable)begin
+        if((compare_in[1]>=compare_in[0]) && enable)begin
             result <= 2'b10;//1类别
         end
-        else if((compare_in[1]>compare_in[0]) || enable)begin
+        else if((compare_in[1]<compare_in[0]) && enable)begin
             result <= 2'b01;//2类别
             end
         else begin

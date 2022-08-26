@@ -3,7 +3,7 @@ module top (
                                 rst_n       ,
                                 read_en     ,
     input   wire [19:0]         data_in     ,
-    output  reg[1:0]            result      
+    output  reg  [1:0]          result      
 );
 //fetchnum
 wire            empty;//一帧数据读完，与外部交互
