@@ -15,7 +15,6 @@ reg     [1:0]   data_in[107:0];//用于存放数据
 reg     [1:0]   mac_in[2:0];
 wire    [1:0]   mac_out;
 wire            mac_done;
-reg             status; //用于检测rst_n的状态
 
 always #10 clk = ~clk;
 initial begin
