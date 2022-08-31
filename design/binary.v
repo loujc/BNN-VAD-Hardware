@@ -4,8 +4,8 @@ module binary #(
     parameter WIDTH         = 3
 )
 (
-    input   reg     [depth-1:0]             data_raw[WIDTH-1:0]        ,
-    output  reg     [target_depth-1:0]      data_binarized[WIDTH-1:0]
+    input   reg signed     [depth-1:0]             data_raw[WIDTH-1:0]        ,
+    output  reg signed     [target_depth-1:0]      data_binarized[WIDTH-1:0]
 );
 
 genvar cnt;
