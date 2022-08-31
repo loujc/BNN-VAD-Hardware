@@ -19,55 +19,41 @@ fc_weight2 = {
     1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-3,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-3
 };//填入weight
 
-reg signed temp1 = 0,temp2 = 0;
-
 reg [5:0] cnt;
 
+//计算
+genvar cnt;
+generate
+    for(cnt=0;cnt<=36;cnt++)
+    begin:cnt_weight
+      always @(posedge clk or negedge rst_n) begin
+        if(!rst_n)begin
+            mac_out     <= 0;
+            cnt         <= 0;
+            mac_done    <= 0;
+        end
+        else if(cnt == 36) begin
+            mac_done <= 1;  //写mac_done逻辑
+        end
+        else if(cnt < 36)begin
+            mac_out[1] <=   mac_in[3] * fc_weight1[107-cnt]
+                        +   mac_in[2] * fc_weight1[71-cnt]
+                        +   mac_in[1] * fc_weight1[35-cnt]
+                        +   mac_out[1];
 
-always @(posedge clk or negedge rst_n) begin
-    if(!rst_n)begin
-        temp_result <= 0;
-        temp1   <= 0;
-        temp2   <= 0;
-        cnt     <= 0;
+            mac_out[0] <=   mac_in[3] * fc_weight2[107-cnt]
+                        +   mac_in[2] * fc_weight2[71-cnt]
+                        +   mac_in[1] * fc_weight2[35-cnt]
+                        +   mac_out[0];
+            mac_done   <= 0;
+        end
+        else begin
+            mac_out <= mac_out;
+        end
+      end
+    
     end
-    else begin //每次都是这几位，然后通过移位进行转换权重
-        temp1 <=    mac_in[3] * fc_weight1[107]
-                +   mac_in[2] * fc_weight1[71]
-                +   mac_in[1] * fc_weight1[35]
-                +   temp1;
-        temp2 <=    mac_in[3] * fc_weight2[107]
-                +   mac_in[2] * fc_weight2[71]
-                +   mac_in[1] * fc_weight2[35]
-                +   temp2;
-        cnt <= cnt + 5'b1;
-    end
-end
-
-always @(posedge clk or negedge rst_n) begin
-    if(!rst_n)begin
-        fc_weight1 <= {
-            1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-2,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,
-            1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-2,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-2
-        };//填入weight
-        fc_weight2 <= {
-            1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-3,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,
-            1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-3,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-1,   1,-1,1,-1,1,-3
-        };//填入weight
-    end
-    else begin
-        fc_weight1 <= fc_weight1 << 1;
-        fc_weight2 <= fc_weight2 << 1;
-    end
-end
-
-
-assign cnt = (cnt == 5'd35)? 5'b0 : cnt;
-
-
-//输出
-assign mac_out  = {temp1,temp2}         ;
-assign mac_done = (cnt == 5'd35)? 1 : 0 ;
+endgenerate
 
 
 endmodule //mac
