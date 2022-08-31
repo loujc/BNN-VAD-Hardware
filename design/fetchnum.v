@@ -12,8 +12,7 @@ reg [2 :0]  cnt;
 reg status;//0表示空了，可以接受数据
 
 assign empty	=	!status;//1表示空了
-;
-reg [15:0]  data_temp[1:20]
+reg [15:0]  data_temp[1:20];
 //暂存
 
 
