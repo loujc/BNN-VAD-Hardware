@@ -2,6 +2,7 @@ module mac (
     input   wire                clk     ,
                                 rst_n   ,
     input   wire [1:0]          mac_in[1:3] ,//2:0
+    input   wire                mac_en      ,
 
     output  reg signed  [9:0]   mac_out[1:2],//1:0
     output  wire                mac_done
@@ -30,7 +31,7 @@ always @(posedge clk or negedge rst_n) begin
         count_reg <= 0;
         mac_out <= {2'd0,2'd0};
     end
-    else if(count_reg <= 35) begin
+    else if((count_reg <= 35) && (mac_en)) begin
         mac_out[2] <=   mac_in[3] * fc_weight2[107-count_reg]
                     +   mac_in[2] * fc_weight2[71-count_reg]
                     +   mac_in[1] * fc_weight2[35-count_reg] + mac_out[2];
@@ -43,6 +44,6 @@ always @(posedge clk or negedge rst_n) begin
 end
 
 
-assign mac_done = (count_reg == 35)? 1 : 0; // TODO 是否需要打一拍
+assign mac_done = (count_reg == 36)? 1 : 0; // TODO 是否需要打一拍
 
 endmodule //mac

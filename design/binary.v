@@ -13,11 +13,11 @@ generate
     for (cnt = 0; cnt < WIDTH; cnt=cnt+1)
     begin: binaryLoop
         always @(*) begin
-            if(data_raw[cnt] >= 'b0) begin
-                data_binarized[cnt] = 1;
+            if(data_raw[cnt] >= 'd0) begin
+                data_binarized[cnt] <= 3'd1;
             end
             else begin
-                data_binarized[cnt] = -1;
+                data_binarized[cnt] <= -3'd1;
             end
         end
     end
