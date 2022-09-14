@@ -5,7 +5,7 @@ module bnn (
     input   wire [15:0] mfcc_data[4:0]  ,
     input   wire [15:0] conv_wt1[4:0]   ,
                         conv_wt2[4:0]   ,
-                        conv_wt3[4:0]
+                        conv_wt3[4:0]   ,
     input   wire [2:0]  fc_wt1[107:0]   ,
                         fc_wt2[107:0]   ,
 
